@@ -2,12 +2,6 @@
   <a-watermark class="page_main" content="图床" :alpha="0.1">
     <header>
       <h1>Img Storage</h1>
-      <div class="desc">
-        <p>无限图片储存数量，你可以上传不限数量的图片！</p>
-        <p>图片首次访问后缓存，"永久"有效，包括全球分布的 CDN，以确保尽可能快地提供图像.</p>
-        <p>项目使用无服务器服务搭建，托管在 <a-tag color="gray"><template #icon><icon-cloud /></template>Cloudflare Pages</a-tag> 上运行.
-        </p>
-      </div>
     </header>
     <main>
       <a-upload draggable :action="ACTION_API" multiple :show-link="false" :image-preview="true"
@@ -46,17 +40,6 @@
         </template>
       </a-upload>
     </main>
-    <footer>
-      <p><img src="./assets/svg/ing.svg"></p>
-      <p>
-        <a href="https://pages.cloudflare.com" target="_blank" rel="noopener noreferrer"><img
-            src="./assets/svg/framework.svg"></a>
-        <a href="https://wordpress.com" target="_blank" rel="noopener noreferrer"><img src="./assets/svg/cache.svg"></a>
-        <a href="https://www.cloudflare.com/zh-cn/application-services/products/cdn/" target="_blank"
-          rel="noopener noreferrer"><img src="./assets/svg/cdn.svg"></a>
-        <a href="https://vuejs.org" target="_blank" rel="noopener noreferrer"><img src="./assets/svg/web.svg"></a>
-      </p>
-    </footer>
   </a-watermark>
 </template>
 <script setup lang="ts">
