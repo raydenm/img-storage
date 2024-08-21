@@ -23,8 +23,8 @@
     width: 100%;
     max-width: 1166px;
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    // overflow-x: hidden;
+    // overflow-y: auto;
 
     :deep(.arco-upload-wrapper) {
       display: flex;
@@ -199,5 +199,60 @@
         }
       }
     }
+  }
+}
+
+.arco-upload-list {
+  padding-right: 6px;
+}
+
+.vh-img-item {
+  margin-bottom: 16px !important;
+  box-sizing: border-box;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  height: 88px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.94);
+  .delete_icon {
+    cursor: pointer;
+    color: rgb(245, 43, 43);
+    width: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.vh_img_val {
+  width: 56px;
+  height: 56px;
+}
+.vh_img_text {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.arco-upload-wrapper {
+  height: auto !important;
+}
+
+.history-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .clear-all{
+    color: rgb(245, 43, 43);
+    padding-right: 16px;
+    cursor: pointer;
   }
 }
