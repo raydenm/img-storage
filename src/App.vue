@@ -14,7 +14,7 @@
         @success="scrollToBottom">
         <template #upload-item="item">
           <div class="vh-img-item" :key="item.fileItem.uid">
-            <a-image class="vh_img_val" :src="item.fileItem.response ?? item.fileItem.url" />
+            <a-image class="vh_img_val" :src="item.fileItem.url" />
             <div class="vh_img_text" v-if="item.fileItem.status == 'uploading'">
               <a-skeleton :animation="true">
                 <a-space direction="vertical" :style="{ width: '100%' }" size="mini">
@@ -53,30 +53,23 @@
         </div>
         <div class="arco-upload-list">
           <div v-for="item in history" class="vh-img-item" :key="item.uid">
-            <img class="vh_img_val" :src="item.response" />
-            <div class="vh_img_text" v-if="item.status == 'uploading'">
-              <a-skeleton :animation="true">
-                <a-space direction="vertical" :style="{ width: '100%' }" size="mini">
-                  <a-skeleton-line :rows="2" />
-                </a-space>
-              </a-skeleton>
-            </div>
-            <div class="vh_img_text with_value" v-else>
+            <img class="vh_img_val" :src="formateUrl(item.link)" />
+            <div class="vh_img_text with_value">
               <section>
-                <a-input :error="item.response == 'Failed'" :default-value="item.response" readonly size="mini"
-                  @click="item.response != 'Failed' && copyStr(item.response)">
-                  <template #append v-if="item.response != 'Failed'">URL</template>
+                <a-input :default-value="formateUrl(item.link)" readonly size="mini"
+                  @click="copyStr(formateUrl(item.link))">
+                  <template #append>URL</template>
                 </a-input>
-                <a-input :error="item.response == 'Failed'" :default-value="`![${item.name}](${item.response})`"
+                <a-input :default-value="`![${item.name}](${formateUrl(item.link)})`"
                   readonly size="mini"
-                  @click="item.response != 'Failed' && copyStr(`![${item.name}](${item.response})`)">
-                  <template #append v-if="item.response != 'Failed'">Markdown</template>
+                  @click="copyStr(`![${item.name}](${formateUrl(item.link)})`)">
+                  <template #append>Markdown</template>
                 </a-input>
               </section>
               <a-popover title="图片二维码">
-                <qrcode-vue class="qr" :value="item.response" :size="56" level="H" />
+                <qrcode-vue class="qr" :value="formateUrl(item.link)" :size="56" level="H" />
                 <template #content>
-                  <qrcode-vue class="qr" :value="item.response" :size="166" level="H" />
+                  <qrcode-vue class="qr" :value="formateUrl(item.link)" :size="166" level="H" />
                 </template>
               </a-popover>
             </div>
@@ -120,7 +113,10 @@ const clearAllHistory = () => {
 }
 
 const handSaveLocalStorage = (item: any) => {
-  localStorage.setItem(STORE_KEY, JSON.stringify([...JSON.parse(localStorage.getItem(STORE_KEY) || '[]'), item]));
+  const { name, uid } = item;
+  const link = item.response.data.link;
+  const data ={ link, name, uid }
+  localStorage.setItem(STORE_KEY, JSON.stringify([...JSON.parse(localStorage.getItem(STORE_KEY) || '[]'), data]));
 }
 
 const formateUrl = (url: string) => {
