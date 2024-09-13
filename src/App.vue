@@ -145,6 +145,8 @@ const copyStr = async (v: string) => {
 
 // 上传完毕滚动到最下面
 const scrollToBottom = (item: any) => {
+  console.log(item);
+  
   handSaveLocalStorage(item);
   nextTick(() => {
     const imgListDom: any = document.querySelector('.arco-upload-list');
