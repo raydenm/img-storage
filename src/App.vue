@@ -3,7 +3,7 @@
     <header>
       <h1>图床</h1>
       <div>
-        <p>1. Vhimg 匿名发布平台存储图片内容, 单图5MB, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
+        <p>1. Vhimg 发布平台存储图片内容, 单图5MB, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
         <p>2. WordPress 托管的图片内容, 缓存图片, 无需购买服务器。</p>
         <p>3. Cloudflare 静态网站托管, 全球CDN加速, 免费二级域名无需购买域名。</p>
       </div>
