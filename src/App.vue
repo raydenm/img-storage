@@ -3,7 +3,7 @@
     <header>
       <h1>图床</h1>
       <div>
-        <p>1. Telegraph 匿名发布平台存储图片内容, 单图5MB, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
+        <p>1. Vhimg 匿名发布平台存储图片内容, 单图5MB, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
         <p>2. WordPress 托管的图片内容, 缓存图片, 无需购买服务器。</p>
         <p>3. Cloudflare 静态网站托管, 全球CDN加速, 免费二级域名无需购买域名。</p>
       </div>
@@ -24,20 +24,22 @@
             </div>
             <div class="vh_img_text with_value" v-else>
               <section>
-                <a-input :error="item.fileItem.response == 'Failed'" :default-value="item.fileItem.response" readonly
-                  size="mini" @click="item.fileItem.response != 'Failed' && copyStr(item.fileItem.response)">
-                  <template #append v-if="item.fileItem.response != 'Failed'">URL</template>
+                <a-input :error="item.fileItem.response.status != 200"
+                  :default-value="formateUrl(item.fileItem.response.data.link)" readonly size="mini"
+                  @click="item.fileItem.response.status == 200 && copyStr(formateUrl(item.fileItem.response.data.link))">
+                  <template #append v-if="item.fileItem.response.status == 200">URL</template>
                 </a-input>
-                <a-input :error="item.fileItem.response == 'Failed'"
-                  :default-value="`![${item.fileItem.name}](${item.fileItem.response})`" readonly size="mini"
-                  @click="item.fileItem.response != 'Failed' && copyStr(`![${item.fileItem.name}](${item.fileItem.response})`)">
-                  <template #append v-if="item.fileItem.response != 'Failed'">Markdown</template>
+                <a-input :error="item.fileItem.response.status != 200"
+                  :default-value="`![${item.fileItem.name}](${formateUrl(item.fileItem.response.data.link)})`" readonly
+                  size="mini"
+                  @click="item.fileItem.response.status == 200 && copyStr(`![${item.fileItem.name}](${formateUrl(item.fileItem.response.data.link)})`)">
+                  <template #append v-if="item.fileItem.response.status == 200">Markdown</template>
                 </a-input>
               </section>
               <a-popover title="图片二维码">
-                <qrcode-vue class="qr" :value="item.fileItem.response" :size="56" level="H" />
+                <qrcode-vue class="qr" :value="formateUrl(item.fileItem.response.data.link)" :size="56" level="H" />
                 <template #content>
-                  <qrcode-vue class="qr" :value="item.fileItem.response" :size="166" level="H" />
+                  <qrcode-vue class="qr" :value="formateUrl(item.fileItem.response.data.link)" :size="166" level="H" />
                 </template>
               </a-popover>
             </div>
@@ -119,6 +121,10 @@ const clearAllHistory = () => {
 
 const handSaveLocalStorage = (item: any) => {
   localStorage.setItem(STORE_KEY, JSON.stringify([...JSON.parse(localStorage.getItem(STORE_KEY) || '[]'), item]));
+}
+
+const formateUrl = (url: string) => {
+  return url.replace('i.imgur.com', `${window.location.hostname}/v3`);
 }
 
 // 复制返回地址
