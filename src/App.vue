@@ -87,7 +87,7 @@ import QrcodeVue from 'qrcode.vue'
 const ACTION_API = import.meta.env.VITE_IMG_API_URL;
 const STORE_KEY = 'imgList';
 
-const history = ref(JSON.parse(localStorage.getItem(STORE_KEY) || '[]'));
+const history = ref(JSON.parse(localStorage.getItem(STORE_KEY) || '[]').reverse());
 
 // 检查图片大小
 const checkImageSizeFn = (file: any) => {
