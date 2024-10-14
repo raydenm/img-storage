@@ -3,15 +3,14 @@
     <header>
       <h1>图床</h1>
       <div>
-        <p>1. Vhimg 发布平台存储图片内容, 单图5MB, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
+        <p>1. Vhimg 发布平台存储图片内容, 无限图片储存数量。支持png, jpg, jpeg, gif。</p>
         <p>2. WordPress 托管的图片内容, 缓存图片, 无需购买服务器。</p>
         <p>3. Cloudflare 静态网站托管, 全球CDN加速, 免费二级域名无需购买域名。</p>
       </div>
     </header>
     <main>
       <a-upload draggable :action="ACTION_API" multiple :show-link="false" :image-preview="true"
-        :show-remove-button="false" accept=".png,.jpg,.jpeg,.gif" :on-before-upload="checkImageSizeFn"
-        @success="scrollToBottom">
+        :show-remove-button="false" accept=".png,.jpg,.jpeg,.gif" @success="scrollToBottom">
         <template #upload-item="item">
           <div class="vh-img-item" :key="item.fileItem.uid">
             <a-image class="vh_img_val" :src="item.fileItem.url" />
@@ -60,8 +59,7 @@
                   @click="copyStr(formateUrl(item.link))">
                   <template #append>URL</template>
                 </a-input>
-                <a-input :default-value="`![${item.name}](${formateUrl(item.link)})`"
-                  readonly size="mini"
+                <a-input :default-value="`![${item.name}](${formateUrl(item.link)})`" readonly size="mini"
                   @click="copyStr(`![${item.name}](${formateUrl(item.link)})`)">
                   <template #append>Markdown</template>
                 </a-input>
@@ -115,7 +113,7 @@ const clearAllHistory = () => {
 const handSaveLocalStorage = (item: any) => {
   const { name, uid } = item;
   const link = item.response.data.link;
-  const data ={ link, name, uid }
+  const data = { link, name, uid }
   localStorage.setItem(STORE_KEY, JSON.stringify([...JSON.parse(localStorage.getItem(STORE_KEY) || '[]'), data]));
 }
 
@@ -142,7 +140,7 @@ const copyStr = async (v: string) => {
 // 上传完毕滚动到最下面
 const scrollToBottom = (item: any) => {
   console.log(item);
-  
+
   handSaveLocalStorage(item);
   nextTick(() => {
     const imgListDom: any = document.querySelector('.arco-upload-list');
